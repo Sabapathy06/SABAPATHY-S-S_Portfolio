@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SABAPATHY S S — Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            900: '#164e63',
+                            950: '#083344',
+                            bg: '#030712'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom animations & fine tuning */
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(6, 182, 212, 0.35);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.08);
+        }
+
+        /* Custom glowing text */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+        }
+
+        /* Active Nav indicator */
+        .nav-link-active {
+            color: #22d3ee !important;
+            border-bottom: 2px solid #22d3ee;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0891b2;
+        }
+
+        /* Continuous subtle pulse */
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 0.25; }
+            50% { opacity: 0.6; }
+        }
+        .pulse-subtle {
+            animation: pulse-soft 3s infinite ease-in-out;
+        }
+
+        /* Scanning effect for MedCare App Mockup */
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+        .scanner-line {
+            animation: scan 4s infinite linear;
+        }
+
+        /* Rover laser wave animation */
+        @keyframes radar-wave {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .radar-pulse {
+            animation: radar-wave 3s infinite cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-300 selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <!-- Interactive Network/Grid Background -->
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40"></canvas>
+
+    <!-- Header / Sticky Navigation -->
+    <header class="sticky top-0 z-50 w-full transition-all duration-300 glass-panel border-t-0 border-x-0 border-b border-slate-800/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="font-mono font-bold text-lg text-white tracking-widest flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 inline-block animate-pulse"></span>
+                        SABAPATHY S S
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-4 text-xs lg:text-sm font-mono">
+                    <a href="#home" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">HOME</a>
+                    <a href="#about" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">ABOUT</a>
+                    <a href="#skills" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">SKILLS</a>
+                    <a href="#projects" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">PROJECTS</a>
+                    <a href="#experience" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">EXPERIENCE</a>
+                    <a href="#achievements" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">ACHIEVEMENTS</a>
+                    <a href="#education" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">EDUCATION</a>
+                    <a href="#contact" class="nav-item text-slate-400 hover:text-white px-3 py-2 transition-colors">CONTACT</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:block">
+                    <a href="mailto:sabapathysiva2006@gmail.com" class="font-mono text-xs border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 px-4 py-2 rounded transition-all duration-200">
+                        GET IN TOUCH
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" aria-label="Toggle Menu" class="text-slate-400 hover:text-white focus:outline-none p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-950/95 backdrop-blur-lg px-4 py-4 space-y-2 text-sm font-mono">
+            <a href="#home" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">HOME</a>
+            <a href="#about" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">ABOUT</a>
+            <a href="#skills" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">SKILLS</a>
+            <a href="#projects" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">PROJECTS</a>
+            <a href="#experience" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">EXPERIENCE</a>
+            <a href="#achievements" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">ACHIEVEMENTS</a>
+            <a href="#education" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">EDUCATION</a>
+            <a href="#contact" class="mobile-nav-item block text-slate-400 hover:text-white py-2 transition-colors">CONTACT</a>
+            <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
+                <a href="mailto:sabapathysiva2006@gmail.com" class="text-xs text-cyan-400 border border-cyan-500/30 px-3 py-1.5 rounded">Email Me</a>
+                <span class="text-xs text-slate-500">Coimbatore, IN</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content wrapper -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 sm:space-y-36 py-12">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="min-h-[85vh] flex flex-col justify-center pt-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Core Text -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs text-slate-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                        PRE-FINAL-YEAR B.E. CSE STUDENT
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <span class="text-base sm:text-lg font-mono text-cyan-400">Hi, I'm Sabapathy S S</span>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+                            ASPIRING <span class="bg-gradient-to-r from-cyan-400 via-teal-400 to-blue-500 bg-clip-text text-transparent">FULL STACK</span> DEVELOPER
+                        </h1>
+                        <p class="text-sm font-mono text-slate-400 tracking-wider pt-2">
+                            "Building Software. Connecting Systems. Exploring Hardware."
+                        </p>
+                    </div>
+
+                    <p class="text-base sm:text-lg text-slate-400 max-w-xl">
+                        Computer Science student building software applications and integrated systems across web, mobile, AI, databases and robotics.
+                    </p>
+
+                    <!-- CTAs / Links -->
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="#projects" class="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold font-mono text-xs rounded transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+                            VIEW PROJECTS
+                        </a>
+                        <a href="#contact" class="px-6 py-3 border border-slate-700 hover:border-cyan-400/50 hover:bg-slate-900/40 text-white font-mono text-xs rounded transition-all duration-300">
+                            GET IN TOUCH
+                        </a>
+                    </div>
+
+                    <!-- Profiles Block -->
+                    <div class="flex items-center gap-6 pt-6 border-t border-slate-900 max-w-md">
+                        <a href="https://www.linkedin.com/in/sabapathy-s-s-130516315" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-cyan-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            LINKEDIN
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-cyan-400 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            GITHUB
+                        </a>
+                        <span class="text-xs font-mono text-slate-500">
+                            #SOFTWARE_AI_HARDWARE
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Technical Abstract Visualizer (Hero Graphic) -->
+                <div class="lg:col-span-5 relative w-full h-[320px] lg:h-[400px] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent rounded-2xl blur-3xl opacity-20"></div>
+                    
+                    <!-- Schematic Blueprint -->
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 glass-panel rounded-2xl border border-slate-800 p-6 flex flex-col justify-between overflow-hidden">
+                        <!-- Technical grid pattern overlay -->
+                        <div class="absolute inset-0 bg-[linear-gradient(to_right,#0891b20a_1px,transparent_1px),linear-gradient(to_bottom,#0891b20a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+                        
+                        <div class="flex justify-between items-start relative z-10">
+                            <span class="text-[10px] font-mono text-cyan-400 tracking-widest uppercase">SYSTEM CORE STATUS: ACTIVE</span>
+                            <span class="text-[10px] font-mono text-slate-500">REV: 2.1</span>
+                        </div>
+
+                        <!-- Central Radial Core -->
+                        <div class="my-auto flex flex-col items-center justify-center relative z-10 py-6">
+                            <div class="relative w-32 h-32 flex items-center justify-center">
+                                <!-- Pulsing circular outlines -->
+                                <div class="absolute inset-0 rounded-full border border-cyan-500/10 animate-ping"></div>
+                                <div class="absolute inset-2 rounded-full border border-dashed border-cyan-500/20 pulse-subtle"></div>
+                                <div class="absolute inset-4 rounded-full border border-slate-700"></div>
+                                <div class="absolute inset-8 rounded-full bg-slate-900 border border-cyan-500/30 flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 0v20M2 12h20M7 7l10 10M17 7L7 17"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs font-mono text-white tracking-widest">SABAPATHY_CORESYSTEM</span>
+                        </div>
+
+                        <div class="flex justify-between items-end relative z-10 text-[9px] font-mono text-slate-500">
+                            <span>GRID INTEL [99.21%]</span>
+                            <span>COMMS: ONLINE</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="scroll-mt-24">
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-xs font-mono text-cyan-400 tracking-widest uppercase">01 // ABOUT ME</h2>
+                    <div class="h-[1px] bg-slate-800 flex-grow"></div>
+                </div>
+
+                <div class="space-y-4">
+                    <p class="text-xl font-medium text-white leading-relaxed">
+                        I am a pre-final-year Computer Science & Engineering student focused on building fully integrated systems.
+                    </p>
+                    <p class="text-base text-slate-400 leading-relaxed">
+                        My interests run deep from designing web application backends and responsive frontends to crafting intelligent Android solutions and working directly with physical microcontrollers. I enjoy bridging the gap between high-level logical software, AI models, and real-world physical hardware.
+                    </p>
+                </div>
+
+                <!-- Quick Scope Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+                    <div class="p-4 bg-slate-900/50 border border-slate-800/80 rounded">
+                        <span class="block text-xs font-mono text-cyan-400 mb-1">DEVELOPMENT</span>
+                        <span class="text-sm font-semibold text-white">Full Stack & Android</span>
+                    </div>
+                    <div class="p-4 bg-slate-900/50 border border-slate-800/80 rounded">
+                        <span class="block text-xs font-mono text-cyan-400 mb-1">INTEGRATION</span>
+                        <span class="text-sm font-semibold text-white">AI & Gemini API</span>
+                    </div>
+                    <div class="p-4 bg-slate-900/50 border border-slate-800/80 rounded">
+                        <span class="block text-xs font-mono text-cyan-400 mb-1">STORAGE</span>
+                        <span class="text-sm font-semibold text-white">Databases & SQL</span>
+                    </div>
+                    <div class="p-4 bg-slate-900/50 border border-slate-800/80 rounded">
+                        <span class="block text-xs font-mono text-cyan-400 mb-1">HARDWARE</span>
+                        <span class="text-sm font-semibold text-white">Robotics & ESP32</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" class="scroll-mt-24">
+            <div class="space-y-12">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-xs font-mono text-cyan-400 tracking-widest uppercase">02 // TECHNICAL ECOSYSTEM</h2>
+                    <div class="h-[1px] bg-slate-800 flex-grow"></div>
+                </div>
+
+                <!-- Skill Cards Grid (NO PERCENTAGE BARS) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Group 1: Programming & Web -->
+                    <div class="glass-panel p-6 rounded-lg space-y-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                            <h3 class="text-sm font-mono font-semibold text-white">LANGUAGES & WEB</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">C</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">C++</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Java</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Python</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">SQL</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">HTML</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">CSS</span>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Android & AI -->
+                    <div class="glass-panel p-6 rounded-lg space-y-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                            <h3 class="text-sm font-mono font-semibold text-white">ANDROID & AI</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Kotlin</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Jetpack Compose</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Android Studio</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Gemini API</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Google ML Kit</span>
+                        </div>
+                    </div>
+
+                    <!-- Group 3: Core & Data -->
+                    <div class="glass-panel p-6 rounded-lg space-y-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                            <h3 class="text-sm font-mono font-semibold text-white">CORE CS & DATA</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">DSA</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">OOPs</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">DBMS</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">SQLite</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Room Database</span>
+                        </div>
+                    </div>
+
+                    <!-- Group 4: Embedded & Tools -->
+                    <div class="glass-panel p-6 rounded-lg space-y-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                            <h3 class="text-sm font-mono font-semibold text-white">HARDWARE & TOOLS</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">Arduino</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">ESP32-CAM</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">GitHub</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">VS Code</span>
+                            <span class="text-xs font-mono bg-slate-950/80 text-slate-300 border border-slate-800 px-2 py-1 rounded">HackerRank</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS SECTION (MAIN FOCUS) -->
+        <section id="projects" class="scroll-mt-24 space-y-16">
+            <div class="flex items-center gap-4">
+                <h2 class="text-xs font-mono text-cyan-400 tracking-widest uppercase">03 // SELECTED ENGINEERING WORKS</h2>
+                <div class="h-[1px] bg-slate-800 flex-grow"></div>
+            </div>
+
+            <!-- PROJECT 1: MEDCARE -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Info block -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="space-y-2">
+                        <span class="text-xs font-mono text-cyan-400 tracking-wider">PROJECT 01</span>
+                        <h3 class="text-3xl font-bold text-white tracking-tight">MEDCARE</h3>
+                        <p class="text-sm font-mono text-slate-400 uppercase">AI-POWERED MEDICATION MANAGEMENT APP</p>
+                    </div>
+
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+                        AI-powered Android application for medication management with OCR, API integration and local data persistence.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-900/40 border border-slate-800/80 rounded-lg">
+                            <h4 class="text-xs font-mono text-white mb-2 uppercase tracking-wide">Key Solution Aspects:</h4>
+                            <ul class="space-y-1.5 text-xs text-slate-400 list-disc list-inside">
+                                <li>Scan drug packing using mobile camera</li>
+                                <li>Extract real-time text/dosage guidelines using Google ML Kit OCR</li>
+                                <li>Utilize Gemini API for contextual prescription guidance/assistance</li>
+                                <li>Retain persistent schedules locally via SQLite / Room Database</li>
+                            </ul>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Kotlin</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Jetpack Compose</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Gemini API</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Google ML Kit</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Room Database</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualization Block: CSS Android Mockup -->
+                <div class="lg:col-span-6 flex justify-center">
+                    <div class="relative w-64 h-[420px] rounded-[36px] border-[6px] border-slate-800 bg-slate-950 overflow-hidden shadow-2xl">
+                        <!-- Top Notch -->
+                        <div class="absolute top-0 inset-x-0 h-4 bg-slate-800 flex justify-center items-center z-30">
+                            <div class="w-16 h-3.5 bg-black rounded-b-md"></div>
+                        </div>
+
+                        <!-- Scan Overlay Frame -->
+                        <div class="absolute inset-0 z-10 border border-slate-900 flex flex-col justify-between p-4 pt-8">
+                            <!-- Header elements of mock app -->
+                            <div class="flex justify-between items-center bg-slate-900/80 p-2 rounded-lg border border-slate-800 backdrop-blur-sm">
+                                <span class="text-[9px] font-mono text-cyan-400">MEDCARE_SCANNER</span>
+                                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                            </div>
+
+                            <!-- Floating OCR Detection Tags -->
+                            <div class="space-y-2 my-auto relative">
+                                <!-- Laser Line -->
+                                <div class="absolute inset-x-0 h-0.5 bg-cyan-400 shadow-[0_0_10px_#22d3ee] scanner-line z-20"></div>
+
+                                <div class="bg-slate-900/90 border border-cyan-500/30 p-2 rounded text-[10px] font-mono space-y-1 relative z-10 transform translate-y-[-10px]">
+                                    <p class="text-cyan-400">[OCR BOUNDING BOX DETECTED]</p>
+                                    <p class="text-white text-xs font-bold">Paracetamol 500mg</p>
+                                </div>
+
+                                <div class="bg-slate-900/95 border border-slate-800 p-2 rounded text-[9px] font-mono space-y-1 relative z-10">
+                                    <p class="text-emerald-400">⚡ GEMINI INSIGHT:</p>
+                                    <p class="text-slate-400 leading-tight">Dosage: 1 Tablet every 6 hours post meal as prescribed. Do not exceed 4g/day.</p>
+                                </div>
+                            </div>
+
+                            <!-- Bottom actions of mock app -->
+                            <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800 text-center text-[10px] font-mono text-slate-400">
+                                DATABASE PERSISTED: SQLite [OK]
+                            </div>
+                        </div>
+
+                        <!-- Mock camera feed background -->
+                        <div class="absolute inset-0 bg-slate-900 opacity-60 flex items-center justify-center">
+                            <svg class="w-20 h-20 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-[1px] bg-slate-900 my-8"></div>
+
+            <!-- PROJECT 2: SEARCH AND DETECT ROVER -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-8">
+                <!-- Visual Block: System Architecture Diagram / Rover mockup -->
+                <div class="lg:col-span-6 order-last lg:order-first">
+                    <div class="w-full glass-panel rounded-xl border border-slate-800 p-6 space-y-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-cyan-400">SYSTEM ARCHITECTURE</span>
+                            <span class="text-xs font-mono text-slate-500">6-WHEEL EMBEDDED SYS</span>
+                        </div>
+
+                        <!-- Architecture schematic interactive graphic -->
+                        <div class="space-y-4 font-mono text-[10px] relative">
+                            <!-- WEB Node -->
+                            <div class="p-3 bg-slate-900 border border-cyan-500/30 rounded flex justify-between items-center">
+                                <span class="text-cyan-300">🖥️ WEB CONTROLLER</span>
+                                <span class="text-slate-500">HTML / CSS Web Interface</span>
+                            </div>
+
+                            <div class="flex justify-center my-1">
+                                <svg class="w-4 h-4 text-cyan-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7-7-7m14-6l-7 7-7-7"/></svg>
+                            </div>
+
+                            <!-- BACKEND Node -->
+                            <div class="p-3 bg-slate-900 border border-slate-800 rounded flex justify-between items-center">
+                                <span class="text-white">⚙️ PYTHON BACKEND</span>
+                                <span class="text-slate-500">SQLite Database Log</span>
+                            </div>
+
+                            <div class="flex justify-center my-1">
+                                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7-7-7m14-6l-7 7-7-7"/></svg>
+                            </div>
+
+                            <!-- HARDWARE Nodes -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-3 bg-cyan-950/50 border border-cyan-500/20 rounded relative overflow-hidden">
+                                    <span class="text-cyan-300 block mb-1">ESP32-CAM</span>
+                                    <span class="text-[9px] text-slate-400">Real-time Video Feed</span>
+                                    <div class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                                </div>
+                                <div class="p-3 bg-slate-900 border border-slate-800 rounded relative">
+                                    <span class="text-white block mb-1">ARDUINO BOARD</span>
+                                    <span class="text-[9px] text-slate-400">Motor Control & Sensors</span>
+                                    <!-- Simple pulse visualization -->
+                                    <div class="absolute bottom-2 right-2 flex gap-1">
+                                        <span class="w-1 h-1 bg-cyan-400 rounded-full radar-pulse"></span>
+                                        <span class="w-1 h-1 bg-cyan-400 rounded-full"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info block -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="space-y-2">
+                        <span class="text-xs font-mono text-cyan-400 tracking-wider">PROJECT 02</span>
+                        <h3 class="text-3xl font-bold text-white tracking-tight">SEARCH AND DETECT ROVER</h3>
+                        <p class="text-sm font-mono text-slate-400 uppercase">Full-Stack Search & Detection System</p>
+                    </div>
+
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+                        Six-wheel search and detection rover combining a web application, Python backend, database and embedded hardware to support rescue operations.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-900/40 border border-slate-800/80 rounded-lg">
+                            <h4 class="text-xs font-mono text-white mb-2 uppercase tracking-wide">Technical Specs:</h4>
+                            <ul class="space-y-1.5 text-xs text-slate-400 list-disc list-inside">
+                                <li>Custom responsive web-based controller dashboard for remote operation</li>
+                                <li>Modular six-wheel mechanical layout driven by motor driver modules</li>
+                                <li>Ultrasonic mapping sensors transmitting range feedback</li>
+                                <li>Embedded ESP32-CAM facilitating immediate camera streams back to backend</li>
+                            </ul>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Python</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Arduino</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">ESP32-CAM</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">Ultrasonic Sensors</span>
+                            <span class="text-[10px] font-mono bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 px-2 py-1 rounded">SQLite</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE SECTION -->
+        <section id="experience" class="scroll-mt-24">
+            <div class="space-y-12 max-w-4xl mx-auto">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-xs font-mono text-cyan-400 tracking-widest uppercase">04 // EXPERIENCE</h2>
+                    <div class="h-[1px] bg-slate-800 flex-grow"></div>
+                </div>
+
+                <!-- Timeline structure -->
+                <div class="border-l border-slate-800 ml-4 pl-6 sm:pl-8 space-y-12">
+                    
+                    <!-- Item 1 -->
+                    <div class="relative">
+                        <!-- Node indicator -->
+                        <span class="absolute -left-[31px] sm:-left-[39px] top-1.5 bg-cyan-400 ring-4 ring-slate-950 w-2.5 h-2.5 rounded-full"></span>
+                        
+                        <div class="space-y-2">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                <h3 class="text-lg font-bold text-white">Technical Intern</h3>
+                                <span class="text-xs font-mono text-cyan-400 bg-cyan-950/30 border border-cyan-800/40 px-2 py-0.5 rounded w-max">Podanur, Coimbatore</span>
+                            </div>
+                            <p class="text-sm font-mono text-slate-400">Signals and Telecommunication Workshop</p>
+                            
+                            <ul class="text-sm text-slate-400 space-y-2 pt-2 list-disc list-inside">
+                                <li>Engineered a web-based material and requirements collection system, streamlining supply scheduling.</li>
+                                <li>Optimized resource planning procedures with a centralized dashboard layout for simplified organization.</li>
+                                <li>Exposed directly to robust telecommunication protocols and hardware standards supporting major railway signaling operations.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ACHIEVEMENTS & CERTIFICATIONS -->
+        <section id="achievements" class="scroll-mt-24">
+            <div class="space-y-12">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-xs font-mono text-cyan-400 tracking-widest uppercase">05 // MILESTONES & CREDENTIALS</h2>
+                    <div class="h-[1px] bg-slate-800 flex-grow"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Achievements Column -->
+                    <div class="space-y-6">
+                        <h3 class="text-sm font-mono text-white tracking-wider border-b border-slate-900 pb-2">HONORS & COMPETITIONS</h3>
+                        
+                        <!-- Card 1 -->
+                        <div class="glass-panel p-5 rounded-lg space-y-2">
+                            <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-widest">NATIONAL LEVEL</span>
+                            <h4 class="text-base font-bold text-white">BIOTHON 2026</h4>
+                            <p class="text-xs font-mono text-slate-400">National-Level Team Finalist</p>
+                            <p class="text-xs text-slate-400">Showcased and defended the structural blueprint and deployment feasibility of the custom Search and Detect Rover.</p>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="glass-panel p-5 rounded-lg space-y-2">
+                            <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-widest">NATIONAL HACKATHON</span>
+                            <h4 class="text-base font-bold text-white">SMART INDIA HACKATHON 2025</h4>
+                            <p class="text-xs font-mono text-slate-400">Selected Candidate (Hardware Category)</p>
+                            <p class="text-xs text-slate-400">Qualified to participate and propose technical system implementations targeted at real-world societal bottlenecks.</p>
+                        </div>
+                    </div>
+
+                    <!-- Certifications Column -->
+                    <div class="space-y-6">
+                        <h3 class="text-sm font-mono text-white tracking-wider border-b border-slate-900 pb-2">CERTIFICATIONS</h3>
+
+                        <div class="space-y-4">
+                            <!-- Cert 1 -->
+                            <div class="flex gap-4 items-start p-4 bg-slate-900/40 border border-slate-800/80 rounded-lg">
+                                <div class="p-2 bg-slate-950 border border-slate-800 rounded">
+                                    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Data Structures in C (Hands-On)</h4>
+                                    <p class="text-xs font-mono text-slate-500">SkillRack — September 2025</p>
+                                </div>
+                            </div>
+
+                            <!-- Cert 2 -->
+                            <div class="flex gap-4 items-start p-4 bg-slate-900/40 border border-slate-800/80 rounded-lg">
+                                <div class="p-2 bg-slate-950 border border-slate-800 rounded">
+                                    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">BEC Exam Certification</h4>
+                                    <p class="text-xs font-mono text-slate-500">Business English Certificate — B1 Grade</p>
+                                </div>
+                            </div>
+
+                            <!-- Cert 3 -->
+                            <div class="flex gap-4 items-start p-4 bg-slate-900/40 border border-slate-800/80 rounded-lg">
+                                <div class="p-2 bg-slate-950 border border-slate-800 rounded">
+                                    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">MATLAB Certification</h4>
+                                    <p class="text-xs font-mono text-slate-500">Numeric Computation and Visualization</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION SECTION -->
+        <section id="education" class="scroll-mt-24">
+            <div class="space-y-12 max-w-4xl mx-auto">
+                <div class="flex items-center gap-4">
+                    <h2 class="text-xs font-mono text-cyan-400 tracking-widest uppercase">06 // ACADEMICS</h2>
+                    <div class="h-[1px] bg-slate-800 flex-grow"></div>
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <!-- B.E. CSE -->
+                    <div class="glass-panel p-6 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="space-y-1">
+                            <span class="text-xs font-mono text-cyan-400 bg-cyan-950/40 border border-cyan-800/40 px-2 py-0.5 rounded">2024 – 2028</span>
+                            <h3 class="text-lg font-bold text-white">Sri Ramakrishna Institute of Technology</h3>
+                            <p class="text-sm text-slate-400">B.E. Computer Science & Engineering</p>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <span class="text-xs font-mono text-slate-400 block">CURRENT CGPA</span>
+                            <span class="text-xl font-mono font-bold text-cyan-400">7.52</span>
+                        </div>
+                    </div>
+
+                    <!-- Schooling Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- HSC -->
+                        <div class="glass-panel p-6 rounded-lg flex justify-between items-center">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-mono text-slate-500 block">2023 – 2024</span>
+                                <h4 class="text-sm font-bold text-white">Sri Saraswathi Ramachandran Vidyalaya Higher Secondary School</h4>
+                                <p class="text-xs text-slate-400">HSC</p>
+                            </div>
+                            <div class="text-right pl-4">
+                                <span class="text-[10px] font-mono text-slate-500 block">SCORE</span>
+                                <span class="text-lg font-mono font-bold text-white">75.5%</span>
+                            </div>
+                        </div>
+
+                        <!-- SSLC -->
+                        <div class="glass-panel p-6 rounded-lg flex justify-between items-center">
+                            <div class="space-y-1">
+                                <span class="text-[10px] font-mono text-slate-500 block">2021 – 2022</span>
+                                <h4 class="text-sm font-bold text-white">Gurukulam High School</h4>
+                                <p class="text-xs text-slate-400">SSLC</p>
+                            </div>
+                            <div class="text-right pl-4">
+                                <span class="text-[10px] font-mono text-slate-500 block">SCORE</span>
+                                <span class="text-lg font-mono font-bold text-white">78.8%</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="scroll-mt-24 pb-12">
+            <div class="max-w-3xl mx-auto text-center space-y-8 py-8 px-6 glass-panel rounded-2xl border border-cyan-500/20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/5 to-transparent pointer-events-none"></div>
+
+                <div class="space-y-2 relative z-10">
+                    <span class="text-xs font-mono text-cyan-400 tracking-widest uppercase">07 // INITIATE COMMS</span>
+                    <h2 class="text-3xl font-bold text-white tracking-tight">Let's Build Something Meaningful.</h2>
+                    <p class="text-sm text-slate-400 max-w-md mx-auto pt-1">
+                        Open for collaborative efforts, software roles, and integrated product development.
+                    </p>
+                </div>
+
+                <!-- Contact Points Layout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto pt-4 relative z-10">
+                    <a href="mailto:sabapathysiva2006@gmail.com" class="p-4 bg-slate-950/60 border border-slate-800 rounded-lg hover:border-cyan-500/50 transition-colors flex items-center gap-3">
+                        <div class="p-2 bg-slate-900 rounded text-cyan-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-[10px] font-mono text-slate-500 block">EMAIL ME DIRECT</span>
+                            <span class="text-xs sm:text-sm font-mono text-white">sabapathysiva2006@gmail.com</span>
+                        </div>
+                    </a>
+
+                    <a href="tel:+917010083407" class="p-4 bg-slate-950/60 border border-slate-800 rounded-lg hover:border-cyan-500/50 transition-colors flex items-center gap-3">
+                        <div class="p-2 bg-slate-900 rounded text-cyan-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-[10px] font-mono text-slate-500 block">CALL PHONE</span>
+                            <span class="text-sm font-mono text-white">+91 7010083407</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="text-[10px] font-mono text-slate-500 relative z-10 pt-4">
+                    COIMBATORE, TAMIL NADU, INDIA
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950/90 py-8 text-center text-xs font-mono text-slate-500 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <span>© 2026 SABAPATHY S S. ALL RIGHTS RESERVED.</span>
+            <div class="flex gap-4">
+                <a href="https://www.linkedin.com/in/sabapathy-s-s-130516315" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400">LINKEDIN</a>
+                <span>·</span>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400">GITHUB</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Canvas & Page Automation Script -->
+    <script>
+        // MOBILE MENU TRIGGER
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            if (isHidden) {
+                // Hamburger icon
+                menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            } else {
+                // Close 'X' icon
+                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            }
+        });
+
+        // Hide drawer on clicking links
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            });
+        });
+
+        // ACTIVE SECTION DETECTION & HEADER STYLE SHIFT ON SCROLL
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('nav-link-active');
+                if (item.getAttribute('href').slice(1) === current) {
+                    item.classList.add('nav-link-active');
+                }
+            });
+        });
+
+        // CANVAS PARTICLES & GRID SYSTEM
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Particle configuration (optimized count for performance)
+        const particleCount = 45;
+        const particles = [];
+        let mouse = { x: null, y: null, radius: 140 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Wall bounds check
+                if (this.x < 0 || this.x > width) this.vx = -this.vx;
+                if (this.y < 0 || this.y > height) this.vy = -this.vy;
+
+                // Mouse interaction / push away slightly
+                if (mouse.x != null && mouse.y != null) {
+                    let dx = this.x - mouse.x;
+                    let dy = this.y - mouse.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < mouse.radius) {
+                        let force = (mouse.radius - dist) / mouse.radius;
+                        this.x += (dx / dist) * force * 2;
+                        this.y += (dy / dist) * force * 2;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(34, 211, 238, 0.45)';
+                ctx.fill();
+            }
+        }
+
+        // Initialize particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw technical grid background lines
+            ctx.strokeStyle = 'rgba(6, 182, 212, 0.025)';
+            ctx.lineWidth = 1;
+            const step = 80;
+            for (let x = 0; x < width; x += step) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < height; y += step) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Draw connected lines between particles
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(34, 211, 238, ${0.15 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
